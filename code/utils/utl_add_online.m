@@ -75,7 +75,10 @@ if ischar(set_online)
             res = context.ws_output_post.(context.outargs{1});            
             % check if the object already has an online expression (e.g., result of io_loadset or processed version thereof)
             if isfield(res,'tracking') && all(isfield(res.tracking,{'online_expression','fingerprint'}))
-                if strcmp(char(raw.tracking.online_expression.head),'rawdata')
+                %if
+                %strcmp(char(raw.tracking.online_expression.head),'rawdata')
+                %SWM
+                if strcmp(char(res.tracking.online_expression.head),'rawdata') % SWM changed from raw.
                     % if this is a rawdata (trivial) expression, we can do at least as good a job here if we
                     % override it based on the data that we actually got in res
                     final_expression = struct('head',@rawdata,'parts',{{{res.chanlocs.labels},unique({res.chanlocs.type})}});
