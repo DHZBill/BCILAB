@@ -367,6 +367,9 @@ try
         case '.sto'
             % Storage files (specific to BCILAB)
             res = getfield(io_load(filename),'EEG');
+        case '.easy'
+            res = pop_easy(filename,0,1,opts.channels);
+            opts.channels = []; 
         otherwise
             error('This file format has no known handler in BCILAB.');
     end
