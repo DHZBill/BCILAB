@@ -143,7 +143,7 @@ else
         plotfreqz = 0;
     end
     if nargin < 8
-        firtype = 'firls';
+        firtype = 'fir1';
     end
     if nargin < 8
         causal = 0;
