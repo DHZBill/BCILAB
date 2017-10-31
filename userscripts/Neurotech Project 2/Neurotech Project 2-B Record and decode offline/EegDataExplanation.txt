@@ -1,0 +1,21 @@
+Background on EEG Data:
+Since all data is collected form the muse it will have 4 channels, two ear references and two electrodes at FP 1 and 2
+(which is across the center of the forehead). In order to parse the data, there are markers scattered thoughout
+the data that denote when certain events happen. For this muse data, we arbitrarily chose 149 and 151 to denote the
+when the period of interest starts for the two classes respectively. 
+
+Additionally, due to the limitations of the muse and programs we are using, we need to properly sync of the data and
+event markers using a photodiode that produces a spike in the data. You do not need to worry about this since it has
+been done ahead of time, but notice that there are event markers 100 and 200 to denote the start and end of the 
+experiment. At those times there will be a large spike in the data on one channel, so just ignore that it is not
+a part of the actual data. If you have any questions on the this, feel free to email Nick or Sam.
+
+
+All data will come in the form of a matlab struct containing all the data and some key fields:
+                pnts: Number of Data Points
+               srate: Sampling rate of the data a.k.a. number of points per second
+               times: timestamps associated with each data point
+                data: the data at each timestamp separated by EEG channel (only 4 of the muse's 6 channel are meaningful)
+            chanlocs: locations of channel
+               event: list of events associated with the data and correstponding latencies (measured in indices not time stamps)
+              stamps: time stamps associated with data points (should just be times but in a different scale)
