@@ -24,12 +24,12 @@ timeL = numPoints/sr;
 % Fs;
 % stims= round(linspace(2*sr,numPoints-2*sr, (timeL-1) / 10));
 Stim1Freq = [10 12 15];
-Stim1Coeff = [.5 .2 .1];
+Stim1Coeff = [5 .2 .1];
 Stim2Freq = [28 32 36];
-Stim2Coeff = [.5 .2 .1];
+Stim2Coeff = [5 .2 .1];
 offset = 5 * sr;
     
-for k = 1:4
+for k = 1:6
     y = zeros(1,numPoints);
     for i = 2:length(y)
         y(i) = y(i-1) +rand -0.5 - y(i-1)/500;
@@ -41,14 +41,14 @@ for k = 1:4
     y = awgn(y,10);
     t = 0:1/sr:5;
     for j = 1:length(fakeBrains.event)
-        if(strcmp(fakeBrains.event(j).type, Stim1(1)) && (k == 2 || k ==3))
+        if(strcmp(fakeBrains.event(j).type, Stim1(1)) && (k == 4 || k ==3))
             for i = 1:length(Stim1Freq)
                 f = Stim1Freq(i);
                 b = Stim1Coeff(i);
                 place = [fakeBrains.event(j).latency, fakeBrains.event(j).latency + offset];
                 y(place(1):place(2)) = awgn(y(place(1):place(2)) + b * sin(2*pi*f*(t + rand)),10);
             end
-        elseif(strcmp(fakeBrains.event(j).type, Stim2(1))&& (k == 2 || k ==3))
+        elseif(strcmp(fakeBrains.event(j).type, Stim2(1))&& (k == 4 || k ==3))
             for i = 1:length(Stim2Freq)
                 f = Stim2Freq(i);
                 b = Stim2Coeff(i);
@@ -59,7 +59,7 @@ for k = 1:4
     end
     fakeBrains.data(k,:)= y;  
 end
-% vizData(fakeBrains, PhotodiodeStimulationChannel,Stim1, Stim2)
+vizData(fakeBrains, PhotodiodeStimulationChannel,Stim1, Stim2)
 save('fakeData.mat', 'fakeBrains')
 
 
