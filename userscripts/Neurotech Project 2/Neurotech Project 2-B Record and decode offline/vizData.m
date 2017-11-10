@@ -3,8 +3,11 @@ function [ ] = vizData( mytempdata,PhotodiodeStimulationChannel,Stim1, Stim2 )
     realDat = mytempdata.data(PhotodiodeStimulationChannel,:).'; %get photodiode channel data
     myX = linspace(0,length(realDat)/1000,length(realDat)); %convert to seconds
     plot(realDat) %display data
+    hold on
     i = 1
-    color = 'N'
+    color = 'N';
+    maxD = max(realDat);
+    minD = min(realDat);
     while i <= length(mytempdata.event)
         if(strcmp(mytempdata.event(i).type, '100') || strcmp(mytempdata.event(i).type, '200'))
             color = 'magenta';
@@ -16,10 +19,11 @@ function [ ] = vizData( mytempdata,PhotodiodeStimulationChannel,Stim1, Stim2 )
             color = 'N';  
         end
         if(~strcmp(color, 'N'))
-            vline(mytempdata.event(i).latency,color)
+            plot([mytempdata.event(i).latency, mytempdata.event(i).latency],[minD,maxD],color)
         end
         i = i +1;
     end
+    hold off
 
 end
 
